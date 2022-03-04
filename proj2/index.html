@@ -61,13 +61,14 @@
 <h3 align="middle">Part 4: Edge Flip</h3>
 
 <ol>
-  <li>Barycentric coordinates are a way of expressing to what extent a point in a triangle is affected by its three vertices. For example, if we had a triangle with one red, one blue, and one green vertex, it makes sense that every point inside the triangle should have some element of red, some element of blue, and some element of green in it. The extent of the color’s representation in that point should be related to how close it is to the vertex in question. Barycentric coordinates allow us to tackle that problem by utilizing the normals of the point to the triangle’s vertices, and let us shade shapes in nicely like the picture below.</li>
+  <li>We started by creating variables for all of the halfedges and vertices in the triangles. We then thought of the halfedges as rotated by 90 degrees counterclockwise as the edge changed. We then split up the new triangles formed and tackled them separately. We set the BC halfedge’s twin, next, edge, vertex, and face, and did the same for BC’s twin CB. We adjusted the next() for each halfedge in the two triangles, and also set the faces for the halfedges. We ended by setting the halfedge of the vertex and the halfedge of the face of the next halfedge (CD, DB, BA). </li>
+  <li>I forgot to reassign the faces halfedges, which took me a while to figure out while debugging. </li>
   <li><img src="images/184_4_1.png" align="middle" width="400px"/></li>
 </ol>
 
-<h3 align="middle">Part 5: "Pixel sampling" for texture mapping</h3>
+<h3 align="middle">Part 5: Edge Split</h3>
 <ol>
-  <li>Pixel sampling is using various methods of sampling to determine the color of a given point. In Task 5, we used barycentric coordinates Nearest sampling is using the closest texture coordinate coordinate to our uv coordinate to determine the color. Bilinear sampling is using the 4 closest texture sample locations surrounding the point of interest and their fractional offsets s & t. We then perform linear interpolation horizontally on the bottom two points and the horizontal offset (this is <i>lerp(s,u00, u10)</i> and <i>lerp(s, u01, u11)</i>), and again on the top two points. We call these u0 and u1, and then finally use linear interpolation by doing <i>lerp(t,u0,u1)</i>. </li>
+  <li>Our implementation was done by pushing up the two middle halfedges into the top two new triangles, instead of deleting them and creating 8 new halfedges. We started again by defining all of the current halfedges and vertices. We then created the new vertex m, 2 new faces, 6 new halfedges (we moved two halfedges upward to the top left and right triangles), and 3 new edges. We then set the neighbors for each of the new 6 halfedges. We set the new neighbors for the outside halfedges and set the halfedges for the edges and the new vertex m. Finally, we set the halfedges of the faces for each new face.  </li>
   <li><div align="middle">
     <table style="width=100%">
       <tr>
@@ -101,7 +102,7 @@
     </li>
 </ol>
 
-<h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
+<h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
 
 <ol>
   <li>Level sampling is estimating the texture footprint using texture coordinates of neighboring screen samples, translating from the screen space (x,y) to texture space (u,v). 
