@@ -1,7 +1,146 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 2 here
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Meshedit</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2018</h1>
+<h1 align="middle">Project 2: MeshEdit</h1>
+<h2 align="middle">Amit Narang, CS 284A</h2>
+<h2 align="middle">Shilpa Sathyanathan, CS 184</h2>
+<h4 align="middle"> Project Link: https://cal-cs184-student.github.io/sp22-project-webpages-narang-amit/proj2/</h4>
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+<p>In this project, we .</p>
+
+<h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
+
+<h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
+
+<ol>
+  <li>De Casteljau’s algorithm draws a curve that is defined by n points by interpolating between each point with regards to t. In our algorithm, we looped through the points, and did lerp(t, point i, point i+1), adding each of the resultant list of 2D vectors. </li>
+  <li><img src="images/184_1_1.png" align="middle" width="400px"/></li>
+</ol>
+
+
+<h3 align="middle">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
+<ol>
+  <li> This algorithm is similar to bilinear interpolation, where we now use an n x n array of sample points. Each nx1 array of control points in u is a Bezier curve. After finding these n points, those points correspond to the n control points for a “moving” curve in v as described in lecture. In our implementation we used an evaluate1D function that evaluates de Casteljau's algorithm for a vector of points at scalar parameter t. We used evaluate1D with each control point and u to find the moving curve. Then we used the moving curve and used evaluateD with v to find the final point. </li>
+</ol>
+
+<h2 align="middle">Section II: Triangle Meshes and Half-Edge Data Structure</h2>
+	
+<h3 align="middle">Part 3: Area-Weighted Vertex Normals</h3>
+<ol>
+  <li><img src="images/my_robot.png" align="middle" width="400px"/></li>
+  <li>We started by finding the halfedge h, and then that halfedge’s corresponding vertex v. For each triangle, we have to find the three vertices, find their two common edges, and then find the vertex with these two edges. To do this, in a do-while loop, we first find the halfedge’s twin, find its vertex, and then find that vertex’s halfedge, from which we used that half edges twin to get the third and final vertex for that triangle. At the end of the loop we set h equal to h’s twin’s next, which was a half edge in the next triangle of the vertex. The loop ends when we start at the original h halfedge.
+ </li>
+</ol>
+
+<h3 align="middle">Part 4: Edge Flip</h3>
+
+<ol>
+  <li>Barycentric coordinates are a way of expressing to what extent a point in a triangle is affected by its three vertices. For example, if we had a triangle with one red, one blue, and one green vertex, it makes sense that every point inside the triangle should have some element of red, some element of blue, and some element of green in it. The extent of the color’s representation in that point should be related to how close it is to the vertex in question. Barycentric coordinates allow us to tackle that problem by utilizing the normals of the point to the triangle’s vertices, and let us shade shapes in nicely like the picture below.</li>
+  <li><img src="images/184_4_1.png" align="middle" width="400px"/></li>
+</ol>
+
+<h3 align="middle">Part 5: "Pixel sampling" for texture mapping</h3>
+<ol>
+  <li>Pixel sampling is using various methods of sampling to determine the color of a given point. In Task 5, we used barycentric coordinates Nearest sampling is using the closest texture coordinate coordinate to our uv coordinate to determine the color. Bilinear sampling is using the 4 closest texture sample locations surrounding the point of interest and their fractional offsets s & t. We then perform linear interpolation horizontally on the bottom two points and the horizontal offset (this is <i>lerp(s,u00, u10)</i> and <i>lerp(s, u01, u11)</i>), and again on the top two points. We call these u0 and u1, and then finally use linear interpolation by doing <i>lerp(t,u0,u1)</i>. </li>
+  <li><div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/184_5_1.png" align="middle" width="400px"/>
+          <figcaption align="middle">Nearest, Supersample Rate: 1</figcaption>
+        </td>
+        <td>
+          <img src="images/184_5_2.png" align="middle" width="400px"/>
+          <figcaption align="middle">Nearest, Supersample Rate: 16</figcaption>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/184_5_3.png" align="middle" width="400px"/>
+          <figcaption align="middle">Bilinear, Supersample Rate: 1</figcaption>
+        </td>
+        <td>
+          <img src="images/184_5_4.png" align="middle" width="400px"/>
+          <figcaption align="middle">Bilinear, Supersample Rate: 16</figcaption>
+        </td>
+      </tr>
+    </table>
+  </div></li>
+  <li>Nearest pixel sampling chooses the closest sample, so there is a bit of warping that occurs. Bilinear pixel sampling, on the other hand, is essentially a weighted average of its closest neighbors and thus creates a much smoother and clearer line as shown between the four images. 
+
+    Additionally, nearest neighbor is better for non-continuous or categorical data, such as simple classification problems. Bilinear is the opposite—it performs better on continuous data like slopes or elevation. 
+    
+    There will be a large difference between the two methods when looking at the 1 pixel per sample images of nearest and bilinear sampling. This is because in the 16 sample per pixel images, supersampling already significantly reduces aliasing so changing to bilinear does not have as much of an effect and therefore results less differences between the two sampling methods. This can be seen above.
+    </li>
+</ol>
+
+<h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
+
+<ol>
+  <li>Level sampling is estimating the texture footprint using texture coordinates of neighboring screen samples, translating from the screen space (x,y) to texture space (u,v). 
+
+    To implement level sampling in texture mapping, we used barycentric coordinates once again with (x+1,y) and (x,y+1). We then found uv coordinates to find respective du/dx, dv/dx, du/dy, and dv/dy. Then, using the following equation:
+    <img src="images/184_6_1.png" align="middle" width="400px"/>
+    . We used this equation to determine the level D. We then lerped this on our sample. 
+  </li>
+  <li><div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/184_6_2.png" align="middle" width="400px"/>
+          <figcaption align="middle">L_ZERO, P_NEAREST</figcaption>
+        </td>
+        <td>
+          <img src="images/184_6_3.png" align="middle" width="400px"/>
+          <figcaption align="middle">L_ZERO, P_LINEAR</figcaption>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/184_6_4.png" align="middle" width="400px"/>
+          <figcaption align="middle">L_NEAREST, P_ZERO</figcaption>
+        </td>
+        <td>
+          <img src="images/184_6_5.png" align="middle" width="400px"/>
+          <figcaption align="middle">L_NEAREST, P_LINEAR</figcaption>
+        </td>
+      </tr>
+    </table>
+  </div></li>
+</ol>
+
+<h2 align="middle">Section III: Art Competition</h2>
+<p>If you are not participating in the optional art competition, don't worry about this section!</p>
+
+<h3 align="middle">Part 7: Draw something interesting!</h3>
+
+</body>
 </html>
