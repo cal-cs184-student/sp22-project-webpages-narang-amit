@@ -26,7 +26,7 @@
 <h1 align="middle">Project 2: MeshEdit</h1>
 <h2 align="middle">Amit Narang, CS 284A</h2>
 <h2 align="middle">Shilpa Sathyanathan, CS 184</h2>
-<h4 align="middle"> Project Link: https://cal-cs184-student.github.io/sp22-project-webpages-narang-amit/proj2/</h4>
+<h4 align="middle"> Project Link: https://github.com/cal-cs184-student/p2-meshedit-sp22-shilpmit</h4>
 <br><br>
 
 <div>
@@ -40,22 +40,88 @@
 
 <ol>
   <li>De Casteljau’s algorithm draws a curve that is defined by n points by interpolating between each point with regards to t. In our algorithm, we looped through the points, and did lerp(t, point i, point i+1), adding each of the resultant list of 2D vectors. </li>
-  <li><img src="images/184_1_1.png" align="middle" width="400px"/></li>
+  <li><div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/image7.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image12.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/image19.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image16.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="images/image14.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image13.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+	</tr>
+      <tr>
+        <td>
+          <img src="images/image6.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>
+  </div></li>
+  <li>
+  <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/image1.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>	  
+  </li>	  
 </ol>
 
 
 <h3 align="middle">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
 <ol>
   <li> This algorithm is similar to bilinear interpolation, where we now use an n x n array of sample points. Each nx1 array of control points in u is a Bezier curve. After finding these n points, those points correspond to the n control points for a “moving” curve in v as described in lecture. In our implementation we used an evaluate1D function that evaluates de Casteljau's algorithm for a vector of points at scalar parameter t. We used evaluate1D with each control point and u to find the moving curve. Then we used the moving curve and used evaluateD with v to find the final point. </li>
+<li>
+<table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/image17.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>
+</li>
 </ol>
 
 <h2 align="middle">Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 	
 <h3 align="middle">Part 3: Area-Weighted Vertex Normals</h3>
 <ol>
-  <li><img src="images/my_robot.png" align="middle" width="400px"/></li>
   <li>We started by finding the halfedge h, and then that halfedge’s corresponding vertex v. For each triangle, we have to find the three vertices, find their two common edges, and then find the vertex with these two edges. To do this, in a do-while loop, we first find the halfedge’s twin, find its vertex, and then find that vertex’s halfedge, from which we used that half edges twin to get the third and final vertex for that triangle. At the end of the loop we set h equal to h’s twin’s next, which was a half edge in the next triangle of the vertex. The loop ends when we start at the original h halfedge.
  </li>
+<li>
+   <table style="width=100%">
+      <br>
+      <tr>
+        <td>
+          <img src="images/image11.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image15.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>
+</li>
+	
+	
 </ol>
 
 <h3 align="middle">Part 4: Edge Flip</h3>
