@@ -105,37 +105,46 @@
 <h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
 
 <ol>
-  <li>Level sampling is estimating the texture footprint using texture coordinates of neighboring screen samples, translating from the screen space (x,y) to texture space (u,v). 
-
-    To implement level sampling in texture mapping, we used barycentric coordinates once again with (x+1,y) and (x,y+1). We then found uv coordinates to find respective du/dx, dv/dx, du/dy, and dv/dy. Then, using the following equation:
-    <img src="images/184_6_1.png" align="middle" width="400px"/>
-    . We used this equation to determine the level D. We then lerped this on our sample. 
-  </li>
-  <li><div align="middle">
+  <li>We generally followed the order provided in the spec: calculating the new vertex positions, calculating the new positions for old vertices, splitting edges, flipping edges, and then moving old vertices to their new positions. We used cout heavily to debug. </li>
+  <li><div align="middle">Sharp edges get rounded / smoothed out as we upsample. If we split an edge on the cube, the split edge remains pretty sharp.  
     <table style="width=100%">
       <tr>
         <td>
-          <img src="images/184_6_2.png" align="middle" width="400px"/>
-          <figcaption align="middle">L_ZERO, P_NEAREST</figcaption>
+          <img src="images/184_6_1.png" align="middle" width="400px"/>
+          <figcaption align="middle">Cube upsampled once</figcaption>
         </td>
         <td>
-          <img src="images/184_6_3.png" align="middle" width="400px"/>
-          <figcaption align="middle">L_ZERO, P_LINEAR</figcaption>
+          <img src="images/184_6_2.png" align="middle" width="400px"/>
+          <figcaption align="middle">Cube upsampled twice</figcaption>
         </td>
       </tr>
       <br>
       <tr>
         <td>
-          <img src="images/184_6_4.png" align="middle" width="400px"/>
-          <figcaption align="middle">L_NEAREST, P_ZERO</figcaption>
+          <img src="images/184_6_3.png" align="middle" width="400px"/>
+          <figcaption align="middle">Cube upsampled thrice</figcaption>
         </td>
         <td>
-          <img src="images/184_6_5.png" align="middle" width="400px"/>
-          <figcaption align="middle">L_NEAREST, P_LINEAR</figcaption>
+          <img src="images/184_6_4.png" align="middle" width="400px"/>
+          <figcaption align="middle">Cube split once, upsampled thrice</figcaption>
         </td>
       </tr>
     </table>
   </div></li>
+  <li> When we tried splitting and flipping various edges along the cube, we noticed that the renderings actually became more assymetric. </li>
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/184_6_5.png" align="middle" width="400px"/>
+        <figcaption align="middle">Splits and Flips on the Cube</figcaption>
+      </td>
+      <td>
+        <img src="images/184_6_6.png" align="middle" width="400px"/>
+        <figcaption align="middle">New Cube upsampled thrice</figcaption>
+      </td>
+    </tr>
+    <br>
+  </table>
 </ol>
 
 <h2 align="middle">Section III: Art Competition</h2>
