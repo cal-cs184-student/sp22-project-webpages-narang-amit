@@ -105,9 +105,23 @@
 	
 <h3 align="middle">Part 3: Area-Weighted Vertex Normals</h3>
 <ol>
-  <li><img src="images/my_robot.png" align="middle" width="400px"/></li>
   <li>We started by finding the halfedge h, and then that halfedge’s corresponding vertex v. For each triangle, we have to find the three vertices, find their two common edges, and then find the vertex with these two edges. To do this, in a do-while loop, we first find the halfedge’s twin, find its vertex, and then find that vertex’s halfedge, from which we used that half edges twin to get the third and final vertex for that triangle. At the end of the loop we set h equal to h’s twin’s next, which was a half edge in the next triangle of the vertex. The loop ends when we start at the original h halfedge.
  </li>
+<li>
+   <table style="width=100%">
+      <br>
+      <tr>
+        <td>
+          <img src="images/image11.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image15.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>
+</li>
+	
+	
 </ol>
 
 <h3 align="middle">Part 4: Edge Flip</h3>
