@@ -128,44 +128,51 @@
 
 <ol>
   <li>We started by creating variables for all of the halfedges and vertices in the triangles. We then thought of the halfedges as rotated by 90 degrees counterclockwise as the edge changed. We then split up the new triangles formed and tackled them separately. We set the BC halfedge’s twin, next, edge, vertex, and face, and did the same for BC’s twin CB. We adjusted the next() for each halfedge in the two triangles, and also set the faces for the halfedges. We ended by setting the halfedge of the vertex and the halfedge of the face of the next halfedge (CD, DB, BA). </li>
+  <li>
+   <table style="width=100%">
+      <br>
+      <tr>
+        <td>
+          <img src="images/image4.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image3.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>
+</li>
+	
   <li>I forgot to reassign the faces halfedges, which took me a while to figure out while debugging. </li>
-  <li><img src="images/184_4_1.png" align="middle" width="400px"/></li>
 </ol>
 
 <h3 align="middle">Part 5: Edge Split</h3>
 <ol>
   <li>Our implementation was done by pushing up the two middle halfedges into the top two new triangles, instead of deleting them and creating 8 new halfedges. We started again by defining all of the current halfedges and vertices. We then created the new vertex m, 2 new faces, 6 new halfedges (we moved two halfedges upward to the top left and right triangles), and 3 new edges. We then set the neighbors for each of the new 6 halfedges. We set the new neighbors for the outside halfedges and set the halfedges for the edges and the new vertex m. Finally, we set the halfedges of the faces for each new face.  </li>
-  <li><div align="middle">
-    <table style="width=100%">
-      <tr>
-        <td>
-          <img src="images/184_5_1.png" align="middle" width="400px"/>
-          <figcaption align="middle">Nearest, Supersample Rate: 1</figcaption>
-        </td>
-        <td>
-          <img src="images/184_5_2.png" align="middle" width="400px"/>
-          <figcaption align="middle">Nearest, Supersample Rate: 16</figcaption>
-        </td>
-      </tr>
+   <li>
+   <table style="width=100%">
       <br>
       <tr>
         <td>
-          <img src="images/184_5_3.png" align="middle" width="400px"/>
-          <figcaption align="middle">Bilinear, Supersample Rate: 1</figcaption>
+          <img src="images/image4.png" align="middle" width="400px"/>
         </td>
         <td>
-          <img src="images/184_5_4.png" align="middle" width="400px"/>
-          <figcaption align="middle">Bilinear, Supersample Rate: 16</figcaption>
+          <img src="images/image9.png" align="middle" width="400px"/>
         </td>
       </tr>
     </table>
-  </div></li>
-  <li>Nearest pixel sampling chooses the closest sample, so there is a bit of warping that occurs. Bilinear pixel sampling, on the other hand, is essentially a weighted average of its closest neighbors and thus creates a much smoother and clearer line as shown between the four images. 
-
-    Additionally, nearest neighbor is better for non-continuous or categorical data, such as simple classification problems. Bilinear is the opposite—it performs better on continuous data like slopes or elevation. 
-    
-    There will be a large difference between the two methods when looking at the 1 pixel per sample images of nearest and bilinear sampling. This is because in the 16 sample per pixel images, supersampling already significantly reduces aliasing so changing to bilinear does not have as much of an effect and therefore results less differences between the two sampling methods. This can be seen above.
-    </li>
+</li>
+  <li>
+   <table style="width=100%">
+      <br>
+      <tr>
+        <td>
+          <img src="images/image4.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+    </table>
 </ol>
 
 <h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
